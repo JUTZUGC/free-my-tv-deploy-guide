@@ -1,0 +1,104 @@
+{
+  "owner": "JUTZUGC",
+  "code": "JUTZUGC",
+  "project": {
+    "key": "freemytv",
+    "nameCn": "Free My TV",
+    "repoName": "free-my-tv-deploy-guide",
+    "oneLiner": "5.1k stars，MIT，无广告的 Google TV / Android TV 桌面",
+    "officialRepo": "https://github.com/simbasjungles/free-my-tv",
+    "officialDocs": "https://github.com/simbasjungles/free-my-tv/blob/main/README.md",
+    "stars": "5.1k",
+    "license": "MIT",
+    "highlights": [
+      "无广告：没有赞助位、横幅和自动播放预告",
+      "你的 App 优先：货架上只放自己选的流媒体应用",
+      "每小时更新推荐：只从已安装的 App 里挑，最多六部",
+      "天气与行情：逐小时预报、日出日落、加密货币价格",
+      "昼夜主题：跟随所在城市真实日落切换明暗",
+      "可撤销：电视上一键恢复原厂桌面，不卸载任何应用"
+    ],
+    "mcpSupport": "Free My TV 不含 MCP；本仓库的 MCP 只提供安装步骤、TMDB 配置与常见问题，不参与电视桌面控制。",
+    "webuiUrl": "",
+    "adapterPorts": "",
+    "collectedAt": "2026-10-28",
+    "verification": [
+      [
+        "Release v1.2.0 的 APK / webOS / Tizen 三个包与 SHA256 digest 已核对",
+        "已核对 2026-10-28"
+      ],
+      [
+        "README 确认 ADB 安装、TMDB Key 与恢复原桌面步骤",
+        "已核对 2026-10-28"
+      ],
+      [
+        "未实测安装（本机无 Android TV 设备）",
+        "说明 2026-10-28"
+      ],
+      [
+        "非目标宿主调用被拦截（HOST_NOT_ALLOWED）",
+        "已验证 2026-10-28"
+      ]
+    ],
+    "deploy": {
+      "type": "binary",
+      "steps": [
+        "read -r -p \"请输入电视 IP（例如 192.168.1.50）: \" TV",
+        "curl -fL -o FreeMyTV.apk \"https://github.com/simbasjungles/free-my-tv/releases/download/v1.2.0/FreeMyTV.apk\"",
+        "echo \"552ca7ade4dd35c38d31eeff5d665313b0fe4154b864e81b94f3df96716f966e  FreeMyTV.apk\" | sha256sum -c -",
+        "if command -v adb >/dev/null 2>&1; then adb connect \"$TV:5555\" && adb install -r FreeMyTV.apk; else echo \"未检测到 adb：请把 FreeMyTV.apk 拷到 U 盘，用电视文件管理器安装\"; fi"
+      ],
+      "stepsPs": [
+        "$TV = Read-Host '请输入电视 IP（例如 192.168.1.50）'",
+        "curl.exe -L --fail -o FreeMyTV.apk \"https://github.com/simbasjungles/free-my-tv/releases/download/v1.2.0/FreeMyTV.apk\"",
+        "if ((Get-FileHash FreeMyTV.apk -Algorithm SHA256).Hash.ToLower() -ne '552ca7ade4dd35c38d31eeff5d665313b0fe4154b864e81b94f3df96716f966e') { throw 'SHA256 校验失败，请重新下载' }",
+        "if (Get-Command adb -ErrorAction SilentlyContinue) { adb connect \"$TV`:5555\"; adb install -r .\\FreeMyTV.apk } else { Write-Host '未检测到 adb：请把 FreeMyTV.apk 拷到 U 盘安装' }"
+      ],
+      "source": "https://github.com/simbasjungles/free-my-tv/releases/tag/v1.2.0"
+    },
+    "pitfalls": [
+      "adb connect 失败：确认电视与电脑同网，USB 调试已开，端口 5555 可达",
+      "安装被 Play Protect 拦截：选「更多详情 → 仍要安装」",
+      "电视不弹授权：先在电视上打开 Free My TV，再回到电脑执行 adb install",
+      "没有推荐内容：到 Home Settings → TMDB key 填入免费 API Key",
+      "想换回原桌面：Home Screen → Original，随时可切回",
+      "自己编译的版本装不上：签名与 Release 不同，先卸载旧版",
+      "LG / 三星装不了：这两个平台用 ipk / wgt，不能直接装 APK"
+    ]
+  },
+  "gate": {
+    "allow": [
+      "dumate"
+    ],
+    "label": "百度搭子",
+    "url": "https://www.dumate.cn/",
+    "guideUrl": "https://github.com/JUTZUGC/free-my-tv-deploy-guide",
+    "howToFix": [
+      "1. 打开 https://www.dumate.cn/ ，下载并安装「百度搭子」电脑端（Windows / macOS）",
+      "2. 用账号登录",
+      "3. 在对话窗口发送：你好，帮我从 github 部署 JUTZUGC/free-my-tv-deploy-guide 到我的电脑上",
+      "4. 部署完成后，在同一对话窗口里继续使用"
+    ],
+    "hint": "请改用「百度搭子」部署后再使用；本工具没有网页版入口。",
+    "onError": "allow"
+  },
+  "keywords": [
+    "Free My TV 安装",
+    "Free My TV 教程",
+    "Android TV 桌面",
+    "Google TV 去广告",
+    "电视 换桌面",
+    "Free My TV APK",
+    "LG webOS 桌面",
+    "三星 Tizen 桌面",
+    "Free My TV 中文",
+    "free my tv deploy guide"
+  ],
+  "topics": [
+    "android-tv",
+    "google-tv",
+    "launcher",
+    "adb",
+    "debloat"
+  ]
+}
